@@ -19,8 +19,20 @@ function App () {
         return;
     }
 
-    console.log(`Requesting download for comic #${comic.num}`);
-    alert(`Would request download for comic #${comic.num}`);
+    try {
+      const response = await fetch(`http://localhost:8080/comic/${comic.num}`, {
+        method: "POST"
+    });
+
+    if (response.ok) {
+      alert(`Download requested for comic #${comic.num}`);
+    } else {
+      alert("Failed to request download. Is server running?");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error contacting the server");
+    }
   }
   
   return (
