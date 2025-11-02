@@ -4,14 +4,30 @@ function App () {
   const[comic, setComic] = useState(null);
   const [comicNum, setComicNum] = useState("");
   
-  async function fetchComic() {
-    const url = comicNum
-    ? `https://api.allorigins.win/raw?url=https://xkcd.com/${comicNum}/info.0.json`
-    : "https://api.allorigins.win/raw?url=https://xkcd.com/info.0.json";
+  async function fetchComic(num = comicNum) {
+  if (!num && num !== 0) num = "";
+
+  const url = num
+    ? `https://api.allorigins.win/get?url=${encodeURIComponent(`https://xkcd.com/${num}/info.0.json`)}`
+    : `https://api.allorigins.win/get?url=${encodeURIComponent("https://xkcd.com/info.0.json")}`;
+
+  try {
     const res = await fetch(url);
-    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status}`);
+    }
+    const wrapped = await res.json();
+    const data = JSON.parse(wrapped.contents);
+
     setComic(data);
+    setComicNum(data.num);
+
+  } catch (err) {
+    console.error("Failed to fetch comic: ", err);
+    alert("Failed to fetch comic. Check comic number or network.");
   }
+}
 
   async function handleDownload() {
     if (!comic) {
@@ -34,6 +50,17 @@ function App () {
       alert("Error contacting the server");
     }
   }
+
+  function handleNext() {
+    if (!comic) return
+    fetchComic(comic.num + 1);
+  }
+
+  function handlePrev() {
+    if (!comic || comic.num === 1) return
+    fetchComic(comic.num - 1);
+  }
+  
   
   return (
     
@@ -45,13 +72,16 @@ function App () {
         type="number"
         placeholder="Comic number (leave blank for latest)"
         value={comicNum}
-        onChange={(e) => setComicNum(e.target.value)}
+        onChange={(e) => setComicNum(Number(e.target.value))}
         style={{ marginRight: 8 }}
         />
-        <button onClick={fetchComic}>Load XKCD</button>
+        <button onClick={() => fetchComic()}>Load XKCD</button>
         <button onClick={handleDownload} style ={{marginLeft: 8}}>
           Download Comic
         </button>
+
+        <button onClick={handlePrev} disabled={!comic || comic.num === 1}>Previous</button>
+        <button onClick={handleNext} disabled={!comic}>Next</button>
       </div>
 
       {comic && (
