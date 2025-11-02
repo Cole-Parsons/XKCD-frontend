@@ -20,7 +20,7 @@ function App () {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/comic/${comic.num}`, {
+      const response = await fetch(`http://host.docker.internal:8080/comic/${comic.num}`, {
         method: "POST"
     });
 
