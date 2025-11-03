@@ -3,6 +3,8 @@ import { useState } from "react"
 function App () {
   const[comic, setComic] = useState(null);
   const [comicNum, setComicNum] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   
   async function fetchComic(num = comicNum) {
   if (!num && num !== 0) num = "";
@@ -12,6 +14,8 @@ function App () {
     : `https://api.allorigins.win/get?url=${encodeURIComponent("https://xkcd.com/info.0.json")}`;
 
   try {
+    setLoading(true);
+    setError(null);
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -23,6 +27,7 @@ function App () {
     setComic(data);
     setComicNum(data.num);
 
+    setLoading(false);
   } catch (err) {
     console.error("Failed to fetch comic: ", err);
     alert("Failed to fetch comic. Check comic number or network.");
@@ -80,8 +85,10 @@ function App () {
           Download Comic
         </button>
 
-        <button onClick={handlePrev} disabled={!comic || comic.num === 1}>Previous</button>
-        <button onClick={handleNext} disabled={!comic}>Next</button>
+        <button onClick={handlePrev} disabled={!comic || comic.num === 1 || loading}>Previous</button>
+        <button onClick={handleNext} disabled={!comic || loading}>Next</button>
+        {loading && <p>Loading...</p>}
+        {error && <p style={{color: 'red'}}>{error}</p>}
       </div>
 
       {comic && (
