@@ -17,8 +17,8 @@ npm run dev
 # Ensure go server is running on port 8080
 ```
 ## Related Projects
-[XKCD-Server](https://github.com/Cole-Parsons/XKCD-Scraper-HTTP-Server.git)
-[XKCD-Client](https://github.com/Cole-Parsons/XKCD-Client.git)
+[XKCD-Server](https://github.com/Cole-Parsons/XKCD-Scraper-HTTP-Server.git)  
+[XKCD-Client](https://github.com/Cole-Parsons/XKCD-Client.git)  
 ---
 ## To run the entirety of the Scraper see:  
-[Docker-compose](https://github.com/Cole-Parsons/XKCD-docker-compose.git)
+[Docker-compose](https://github.com/Cole-Parsons/XKCD-docker-compose.git)  
