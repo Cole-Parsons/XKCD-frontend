@@ -17,6 +17,8 @@ npm install
 npm start
 # Ensure go server is running on port 8080
 ```
+Accessible at: http://localhost:3000  
+
 ## Related Projects
 [XKCD-Server](https://github.com/Cole-Parsons/XKCD-Scraper-HTTP-Server.git)  
 [XKCD-Client](https://github.com/Cole-Parsons/XKCD-Client.git)  
