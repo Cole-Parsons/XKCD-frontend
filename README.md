@@ -13,7 +13,7 @@ This project demonstrates React state management, API integration, and client-se
 git clone https://github.com/Cole-Parsons/XKCD-frontend.git
 cd XKCD-frontend
 npm install
-npm run dev
+npm start
 # Ensure go server is running on port 8080
 ```
 ## Related Projects
