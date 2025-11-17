@@ -5,6 +5,7 @@ function App () {
   const [comicNum, setComicNum] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [cooldown, setCooldown] = useState(false);
   
   async function fetchComic(num = comicNum) {
   if (!num && num !== 0) num = "";
@@ -58,12 +59,19 @@ function App () {
 
   function handleNext() {
     if (!comic) return
+    startCooldown();
     fetchComic(comic.num + 1);
   }
 
   function handlePrev() {
     if (!comic || comic.num === 1) return
+    startCooldown();
     fetchComic(comic.num - 1);
+  }
+
+  function startCooldown(ms = 1000) {
+    setCooldown(true);
+    setTimeout(() => setCooldown(false), ms);
   }
   
   
@@ -85,8 +93,8 @@ function App () {
           Download Comic
         </button>
 
-        <button onClick={handlePrev} disabled={!comic || comic.num === 1 || loading}>Previous</button>
-        <button onClick={handleNext} disabled={!comic || loading}>Next</button>
+        <button onClick={handlePrev} disabled={!comic || comic.num === 1 || loading || cooldown}>Previous</button>
+        <button onClick={handleNext} disabled={!comic || loading || cooldown}>Next</button>
         {loading && <p>Loading...</p>}
         {error && <p style={{color: 'red'}}>{error}</p>}
       </div>
