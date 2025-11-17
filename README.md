@@ -5,7 +5,8 @@ This project demonstrates React state management, API integration, and client-se
 ## Features  
 * View any XKCD Comic by number or load the latest one  
 * Navigate to previous and next comics  
-* Request downloads through connected Go backend  
+* Request downloads through connected Go backend
+* <mark>For Download Feature to Work [XKCD Server](https://github.com/Cole-Parsons/XKCD-Scraper-HTTP-Server) must be online</mark>
 * Uses AllOrigins API to bypass CORS restrictions  
 ---
 # Installation   
